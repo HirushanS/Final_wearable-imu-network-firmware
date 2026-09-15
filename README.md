@@ -22,6 +22,8 @@ The first custom-PCB stage brought the prototype circuitry onto a shared board d
 
 ![Prototype 2: first custom PCB](images/prototype-2.jpg)
 
+![Prototype 2: four sensor nodes and central module](images/prototype-2_4Nodes%26Center.jpg)
+
 ### Final Version — Wearable System
 
 The final hardware uses separate central-module and sensor-node PCB designs, integrated with rechargeable batteries and enclosures for wearable operation.
@@ -98,6 +100,7 @@ These are potential applications of the prototype, rather than claims of clinica
 <!-- Upload photos to an images folder beside this README using these exact names:
 images/prototype1.png
 images/prototype-2.jpg
+images/prototype-2_4Nodes&Center.jpg
 images/final-version-pcb.jpg
 images/final-version-packed-in-box.png
 images/final-version-ready-for-wearable.png
