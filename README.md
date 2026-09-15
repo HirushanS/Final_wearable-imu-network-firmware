@@ -14,7 +14,7 @@ The system comprises a central module worn on the chest and four sensor nodes pl
 
 Initial dot-board assembly used to develop and check sensor connections, embedded firmware, and wireless communication.
 
-![Prototype 1: dot-board implementation](images/prototype-1.jpg)
+![Prototype 1: dot-board implementation](images/prototype1.png)
 
 ### Prototype 2 — First Custom PCB
 
@@ -92,7 +92,7 @@ These are potential applications of the prototype, rather than claims of clinica
 6. Use OTA updates after the firmware's OTA and network configuration has been established.
 
 <!-- Upload photos to an images folder beside this README using these exact names:
-images/prototype-1.jpg
+images/prototype1.png
 images/prototype-2.jpg
 images/final-version.jpg
 If you use PNG files, update the image links above to match their extensions.
