@@ -1,0 +1,10 @@
+#ifndef SECRETS_EXAMPLE_H
+#define SECRETS_EXAMPLE_H
+
+#define WIFI_SSID "YOUR_WIFI_NAME"
+#define WIFI_PASSWORD "YOUR_WIFI_PASSWORD"
+
+#define DATABASE_URL "https://YOUR_PROJECT-default-rtdb.REGION.firebasedatabase.app/"
+#define DATABASE_SECRET "YOUR_FIREBASE_DATABASE_SECRET"
+
+#endif

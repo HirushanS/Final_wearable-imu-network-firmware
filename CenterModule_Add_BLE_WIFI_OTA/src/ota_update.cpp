@@ -4,25 +4,22 @@
 #include <ArduinoOTA.h>
 #include <WiFi.h>
 
-#include "project_config.h"
-
-#define STRINGIFY_VALUE(value) #value
-#define STRINGIFY(value) STRINGIFY_VALUE(value)
-
 // ---------------------------------------------------------------------------
 // EDIT THESE SETTINGS BEFORE THE FIRST USB UPLOAD.
-// ESP32 uses a 2.4 GHz Wi-Fi network.
-// Give every ESP32 node a different OTA_HOSTNAME.
+// Give this device a unique OTA_HOSTNAME if you ever add more OTA-capable
+// boards to the same network (nodes, other centers, etc).
+//
+// NOTE: this module does NOT connect to Wi-Fi itself. This project already
+// connects via connectWiFiWithBLEProvisioning() in main.cpp, on a specific
+// ESP-NOW channel. If this module called WiFi.begin() with its own
+// credentials it would tear down that connection and break ESP-NOW.
 // ---------------------------------------------------------------------------
-static const char* WIFI_SSID = "SGM_D";
-static const char* WIFI_PASSWORD = "BAD80Fd1";
-static const char* OTA_HOSTNAME = "imu-node-" STRINGIFY(NODE_ID);
-static const char* OTA_PASSWORD = "Hirushan";
+static const char* OTA_HOSTNAME = "imu-center";
+static const char* OTA_PASSWORD = "Hirushan123";
 static const uint16_t OTA_PORT = 3232;
 
 static bool otaReady = false;
 static volatile bool otaUpdateInProgress = false;
-static unsigned long lastWifiRetryTime = 0;
 static int lastOtaProgress = -1;
 
 static void startOTAService() {
@@ -99,52 +96,33 @@ static void startOTAService() {
 void initOTA() {
   Serial.println("OTA module: initialization started.");
 
-  WiFi.persistent(false);
-  WiFi.mode(WIFI_STA);
-  WiFi.setAutoReconnect(true);
-  WiFi.setHostname(OTA_HOSTNAME);
-
-  Serial.print("Connecting to Wi-Fi for OTA");
-  Serial.print(" on channel ");
-  Serial.print(ESPNOW_WIFI_CHANNEL);
-  WiFi.begin(WIFI_SSID, WIFI_PASSWORD, ESPNOW_WIFI_CHANNEL);
-  lastWifiRetryTime = millis();
-
-  const unsigned long connectionStart = millis();
-
-  while (WiFi.status() != WL_CONNECTED &&
-         millis() - connectionStart < 15000) {
-    Serial.print('.');
-    delay(250);
-  }
-
-  Serial.println();
-
-  if (WiFi.status() == WL_CONNECTED) {
-    startOTAService();
-  } else {
+  if (WiFi.status() != WL_CONNECTED) {
     Serial.println(
-      "Wi-Fi unavailable. Main program will continue; OTA will retry in the background."
+      "OTA module: Wi-Fi is not connected yet. Call initOTA() after "
+      "Wi-Fi has connected. OTA will arm itself automatically from "
+      "handleOTA() once Wi-Fi comes up."
     );
-  }
-}
-
-void handleOTA() {
-  if (WiFi.status() == WL_CONNECTED) {
-    if (!otaReady) {
-      startOTAService();
-    }
-
-    ArduinoOTA.handle();
     return;
   }
 
-  if (millis() - lastWifiRetryTime >= 10000) {
-    lastWifiRetryTime = millis();
-    Serial.println("Retrying Wi-Fi connection for OTA...");
-    WiFi.disconnect();
-    WiFi.begin(WIFI_SSID, WIFI_PASSWORD, ESPNOW_WIFI_CHANNEL);
+  startOTAService();
+}
+
+void handleOTA() {
+  // Wi-Fi connection/reconnection is owned by wifi_ble_provisioning.
+  // This just arms/services OTA whenever a connection is present.
+  if (WiFi.status() != WL_CONNECTED) {
+    // Wi-Fi dropped: OTA's UDP listener won't survive this, so force a
+    // re-arm the next time we see WL_CONNECTED.
+    otaReady = false;
+    return;
   }
+
+  if (!otaReady) {
+    startOTAService();
+  }
+
+  ArduinoOTA.handle();
 }
 
 bool isOTAUpdating() {
