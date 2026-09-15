@@ -3,3 +3,4 @@
 .vscode/c_cpp_properties.json
 .vscode/launch.json
 .vscode/ipch/
+CenterModule_Add_BLE_WIFI_OTA/include/secrets.h
