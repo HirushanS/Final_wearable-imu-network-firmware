@@ -26,7 +26,11 @@ The first custom-PCB stage brought the prototype circuitry onto a shared board d
 
 The final hardware uses separate central-module and sensor-node PCB designs, integrated with rechargeable batteries and enclosures for wearable operation.
 
-![Final assembled wearable IMU system](images/final-version.jpg)
+![Final version: central module and sensor-node PCBs](images/final-version-pcb.jpg)
+
+![Final version: wearable system packed in its case](images/final-version-packed-in-box.png)
+
+![Final version: assembled wearable system](images/final-version-ready-for-wearable.png)
 
 ## Firmware Features
 
@@ -94,6 +98,8 @@ These are potential applications of the prototype, rather than claims of clinica
 <!-- Upload photos to an images folder beside this README using these exact names:
 images/prototype1.png
 images/prototype-2.jpg
-images/final-version.jpg
+images/final-version-pcb.jpg
+images/final-version-packed-in-box.png
+images/final-version-ready-for-wearable.png
 If you use PNG files, update the image links above to match their extensions.
 -->
